@@ -7,8 +7,11 @@ An elegant and dynamic animated graphical gauge meter built with jQuery. GaugeMe
 [![GaugeMeter.js jQuery Plugin by Ash Alom](http://ashalom.com/developer/js/GaugeMeter/ScreenShot@640.png)](http://ashalom.github.io/GaugeMeter)
 
 > **DEMO:** ~~http://ashalom.github.io/GaugeMeter~~
+
 > **REPO:** ~~https://github.com/AshAlom/GaugeMeter~~ 
+
 > **BACKUP:** https://github.com/githubsrinath/GaugeMeter
+
 > **THIS:** https://github.com/Mictronics/GaugeMeter
 
 ---
