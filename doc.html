@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>GaugeMeter.js - jQuery Plugin</title>
+        <meta name="description" content="Easy to use guage meter JavaScript plugin using jQuery">
+        <meta name="author" content="Mictronics">
+        <style>
+            .GaugeMeter{
+                Position: Relative;
+                Text-Align: Center;
+                Overflow: Hidden;
+                Cursor: Default;
+            }
+
+            .GaugeMeter SPAN,
+            .GaugeMeter B{
+                Margin:	0 23%;
+                Width: 54%;
+                Position: Absolute;
+                Text-Align: Center;
+                Display: Inline-Block;
+                Color: RGBa(0,0,0,.8);
+                Font-Weight: 100;
+                Font-Family: "Open Sans", Arial;
+                Overflow: Hidden;
+                White-Space: NoWrap;
+                Text-Overflow: Ellipsis;
+            }
+            .GaugeMeter[data-style="Semi"] B{
+                Margin: 0 10%;
+                Width: 80%;
+            }
+
+            .GaugeMeter S,
+            .GaugeMeter U{
+                Text-Decoration:None;
+                Font-Size: .60em;
+                Font-Weight: 200;
+                Opacity: .6;
+            }
+
+            .GaugeMeter B{
+                Color: Black;
+                Font-Weight: 200;
+                Font-Size: 0.85em;
+                Opacity: .8;
+            }
+        </style>
+        <style>
+            BODY{
+                Margin: 0;
+                Padding: 0;
+                Width: 100%;
+            }
+            PRE{
+                Background: RGBa(0,0,0,.05);
+                Padding: 15px;
+                Border-Radius: 10px;
+                Position: Relative;
+                Width: 350px;
+                Float: Left;
+                Font-Weight: 100;
+                Letter-Spacing: -1px;
+                Margin: 0 10px 10px 30px;
+            }
+
+            HR{
+                Clear: Both;
+                Margin-Top: 230px;
+                Margin-Bottom: 10px;
+                Width: 100%;
+                Border: 0;
+                Height:	1px;
+                Background: #21B4F9;
+            }
+
+            DIV.GaugeMeter{
+                Float: Left;
+            }
+
+            H1{
+                Font: Normal Bold 24px/24px "Open Sans", Arial;
+                Color: #2C94E0;
+                Margin-Left: 10px;
+            }
+
+            H1 B{
+                Font-Weight: 100;
+            }
+
+            H2{
+                Font: Normal 700 20px/20px "Open Sans", Arial;
+                Color: DarkBlue;
+                Margin-Top: 60px;
+                Margin-Left: 10px;
+            }
+
+            H3{
+                Font: Normal 600 16px/16px "Open Sans", Arial;
+                Color: DarkBlue;
+                Margin-Top: 30px;
+                Margin-Left: 20px;
+            }
+            H3 B{
+                Font-Weight: 100;
+            }
+
+            P{
+                Font: Normal 100 15px/15px Arial;
+                Color: Black;
+                Margin-Bottom: 20px;
+                Margin-Left: 20px;
+            }
+
+
+            UL{
+                Color: #2C94E0;
+                List-Style-Type: Square;
+                Padding-Left: 0;
+                Margin-Bottom: 20px;
+                Margin-Left: 10px;
+            }
+
+            UL.Cols2{
+                -webkit-column-count: 3;
+                -webkit-column-gap: 0.5em;
+                -moz-column-count: 3;
+                -moz-column-gap: 0.5em;
+                column-count: 3;
+                column-gap: 0.5em;
+            }
+
+            UL LI{
+                Margin-Left: 30px;
+                -webkit-column-break-inside: Avoid;
+                -moz-column-break-inside: Avoid;
+                column-break-inside: Avoid;
+            }
+
+            LI P{
+                Margin: 3px 0 !important;
+            }
+
+            PRE.Code{
+                Letter-Spacing: 0;
+                Width: Auto;
+                Width: calc(100vw - 70px);
+                Color: #6AA121;
+                Float: None;
+                Font-Size: 13px;
+                Line-Height: 20px;
+                Margin-Bottom: 50px;
+                Margin-Left: 30px;
+                Border-Left: 4px Solid #2C94E0;
+                Border-Radius: 1px 10px 10px 1px;
+                Padding: 0 10px 0 0;
+                Background-Image: Linear-Gradient(Transparent 50%, RGBa(255,255,255,.6) 50%);
+                Background-Size: 40px 40px;
+                Counter-Reset: Line-Numbering;
+                Word-Break: Break-Word;
+            }
+            PRE.Code .Line::before{
+                Content: Counter(Line-Numbering);
+                Counter-Increment: Line-Numbering;
+                Min-Width: 3em;
+                Padding-Right: 1em;
+                Margin-Right: 1em;
+                Display: Inline-Block;
+                Text-Align: Right;
+                Color: RGBa(44,148,224,.7);
+                Border-Right: 1px Solid #2C94E0;
+                Background: RGBa(44,148,224,.04);
+                -webkit-touch-callout: None;
+                -webkit-user-select: None;
+                -khtml-user-select: None;
+                -moz-user-select: None;
+                -ms-user-select: None;
+                user-select: None;
+            }
+
+            #Header{
+                min-Height:360px;
+            }
+
+            HEADER,
+            FOOTER{
+                Width: 100%;
+                z-Index: 1;
+                Top: 0;
+                Margin: 0;
+                Padding: 10px 0 0 0;
+                Text-Align: Center;
+                Background: #21B4F9;
+                Background: #2C94E0;
+                Background: Linear-Gradient(45deg, #2C94E0, #21B4F9), URL(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAQAAAAmqpm+AAAAUUlEQVR4AWMgDvyXJEoV7/AwjnckGzdq3Khxo8apDQvj/kuCIS9OqIYCefFD4tzG+F+NGFW0Mo7ysBvNFaPGjRo3apzkIDfuP89/XipASQgEAF4fpQGYXVnnAAAAAElFTkSuQmCC);
+                Background-Blend-Mode: Lighten;
+                Box-Shadow: 0 0 20px 0 rgba(0,0,0,.4);
+                -Moz-Animation: BluePrint 60s Infinite;
+                -Webkit-Animation: BluePrint 60s Infinite;
+                Animation: BluePrint 60s Infinite;
+            }
+
+            @-moz-keyframes BluePrint{
+                0% {Background-Position: 0 0;}
+                100% {Background-Position: 1100% 100%;}
+            }
+
+            @-webkit-keyframes BluePrint{
+                0% {Background-Position: 0 0;}
+                100% {Background-Position: 1100% 100%;}
+            }
+
+            @keyframes BluePrint{
+                0% {Background-Position: 0 0;}
+                100% {Background-Position: -100% 100%;}
+            }
+
+            HEADER H1{
+                Color: White;
+                Font: Normal 400 28px/28px "Helvetica", Arial;
+                Margin: 30px Auto 20px Auto;
+                Text-Shadow: 0 2px 10px rgba(0,0,0,.3);
+            }
+
+            HEADER P{
+                Color: White;
+                Font: Normal 200 18px/22px "Helvetica", Arial;
+                Margin: 0 Auto;
+                Text-Shadow: 0 1px 5px rgba(0,0,0,.3);
+            }
+            HEADER P.SubTitle{
+                Color: White;
+                Font: Normal 200 15px/22px "Helvetica", Arial;
+                Margin: 0 Auto;
+                Text-Shadow: 0 1px 5px rgba(0,0,0,.3);
+            }
+
+            HEADER .Preview{
+                Overflow: Auto;
+                Margin-Top: 30px;
+                Display: Inline-Block;
+            }
+
+            HEADER .Preview .GaugeMeter{
+                Margin: 0 10px;
+            }
+
+            TABLE{
+                Font: Normal Normal 12px/14px "Open Sans", Arial;
+                Border-Collapse: Collapse;
+                Margin: 0 10px 10px 30px;
+                Width: calc(100vw - 55px);
+                Border-Bottom: 2px Solid #2C94E0;
+            }
+
+            TR{
+                Margin: 1px;
+                Padding: 0;
+            }
+
+            TR:Hover{
+                Background: RGBa(33,180,249,.1) !important;
+            }
+            TR:not(.TableHead):Hover TH{
+                Background: RGBa(33,180,249,.11) !important;
+            }
+
+            TD, TH{
+                Text-Align: Center;
+                Margin: 0!imporatant;
+                Padding: 0 !imporatant;
+                Border-Right: 1px Solid LightGray;
+                Border-Bottom: 1px Solid #2C94E0;
+                Padding: 10px;
+                Vertical-Align: Top;
+                Text-Align: Left;
+            }
+            TR:nth-child(odd){
+                Background: #F7F7F7;
+            }
+            TH{
+                Border-Right: 1px Solid #2C94E0;
+                Font: Normal Bold 12px/14px MonoSpace;
+                White-Space: NoWrap;
+            }
+
+            .Col1{
+                Width: 180px !important;
+                Padding: 10px !important;
+            }
+
+            .Col2{
+                Width: 50px !important;
+                Text-Align: Center;
+                Padding: 10px !important;
+            }
+
+            .Col3{
+                Width: 100px !important;
+                Text-Align: Center;
+                Padding: 10px !important;
+                Color: #6AA121;
+                Font: Italic Normal 11px/14px Monospace, Arial;
+            }
+            .Col3 em{
+                Font: Italic Normal 12px/14px "Open Sans", Arial;
+                Color: Silver;
+            }
+
+            .Col4{
+                Width: 200px !important;
+                Padding: 10px !important;
+            }
+            .Col4 DIV{
+                Width: 180px !important;
+                Background: #EFEFEF;
+                Margin: 2px 0 10px 0;
+                Padding: 5px 10px;
+                Font: Normal Bold 10px/14px "Open Sans", Arial;
+                Color: White;
+                Text-Shadow: 0 1px 6px rgba(0,0,0,.6);
+                Box-Shadow: 0 1px 6px rgba(0,0,0,.2);
+            }
+            .Col4 DIV:before{
+                Content: "0%";
+            }
+            .Col4 DIV span:after{
+                Content: "100%";
+                Text-Decoration: None;
+                Float: Right;
+            }
+
+            TH.Col4{
+                Text-Align: Center;
+            }
+
+            .Col5{
+                Border-Right: None;
+                Min-Width: 90% !important;
+                Padding: 10px !important;
+            }
+
+            TABLE I{
+                Color: #6AA121;
+                Font: Italic Normal 12px/14px Monospace, Arial;
+            }
+
+            .TableHead TH{
+                Background: #2C94E0;
+                Font: Normal Bold 12px/18px "Open Sans", Arial;
+                Padding: 8px 10px 5px 10px;
+                Color: White;
+                Vertical-Align: Middle;
+                Border-Right: 1px Solid White;
+            }
+            .TableHead TH:last-child{
+                Border-Right: None;
+            }
+
+            .Hide {
+                Display: None;
+            }
+            DIV.StickyHeader{
+                Position: Fixed;
+                Top: 0;
+            }
+            DIV.StickyHeader TABLE{
+                Border-Bottom: None;
+            }
+
+            FOOTER{
+                Width: 100%;
+                z-Index: 1;
+                Top: 0;
+                Margin: 60px 0 0 0;
+                Padding: 20px 0 15px 0;
+                Text-Align: Left;
+                Overflow: Hidden;
+                Background: #21B4F9;
+                Background: #2C94E0;
+                Background: Linear-Gradient(-45deg, #2C94E0, #21B4F9), URL(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAQAAAAmqpm+AAAAUUlEQVR4AWMgDvyXJEoV7/AwjnckGzdq3Khxo8apDQvj/kuCIS9OqIYCefFD4tzG+F+NGFW0Mo7ysBvNFaPGjRo3apzkIDfuP89/XipASQgEAF4fpQGYXVnnAAAAAElFTkSuQmCC);
+                Background-Blend-Mode: Lighten;
+                Box-Shadow: 0 0 20px 0 rgba(0,0,0,.4);
+            }
+
+            FOOTER A,
+            FOOTER A:Hover{
+                Color: White;
+                Text-Decoration: None;
+            }
+            FOOTER A:Hover B{
+                Color: RGBa(255,255,255,1);
+            }
+
+            FOOTER H4{
+                Font: Normal 400 18px/36px "Open Sans", Arial;
+                Color: White;
+                Margin: 0;
+                Padding: 0 28px 0 28px;
+                Text-Shadow: 0 1px 2px rgba(0,0,0,.1);
+            }
+            FOOTER H4 B{
+                Font: Normal 400 18px/26px "Open Sans", Arial;
+                Color: RGBa(255,255,255,.6);
+            }
+            FOOTER H4 I{
+                Font: Normal 100 14px/36px "Open Sans", Arial;
+                Float: Right;
+            }
+
+            .Ribbon{
+                Background: #a90329;
+                Background: -moz-linear-gradient(top, #a90329 0%, #6d0019 100%);
+                Background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(100%,#6d0019));
+                Background: -webkit-linear-gradient(top, #a90329 0%,#6d0019 100%);
+                Background: -o-linear-gradient(top, #a90329 0%,#6d0019 100%);
+                Background: -ms-linear-gradient(top, #a90329 0%,#6d0019 100%);
+                Background: linear-gradient(to bottom, #a90329 0%,#6d0019 100%);
+                Border: 1px Dashed RGBa(255,255,255,.2);
+                Box-shadow: 0 1px 10px RGBa(0,0,0,.6);
+                Font: Normal 800 10px "Open Sans", Arial;
+                Top: 3.2em;
+                Right: -3.7em;
+                Color: White;
+                Display: Block;
+                Padding: .6em 3.5em;
+                Position: Fixed;
+                z-Index: 100;
+                Text-Align: Center;
+                Text-Decoration: None;
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                transform: rotate(45deg);
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+            .Ribbon:Hover{
+                Background: #000;
+            }
+        </style>
+        <script Xsrc="jquery-3.2.1.min.js" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="GaugeMeter.js"></script>
+    </head>
+    <body>
+
+        <header id="Header">
+            <a href="https://github.com/Mictronics/GaugeMeter" class="Ribbon" Title="github.com/Mictronics">Fork me on GitHub</a>
+            <h1>GaugeMeter.js jQuery Plugin</h1>
+            <p>An elegant and dynamic graphical gauge meter built with jQuery</p>
+            <p class="SubTitle">GaugeMeter.js is highly customizable and includes full-radial, semi-radial &amp; arch dials</p>
+            <p><b>This is a bug fixed and modified version of the original Ash Alom gauge meter based on minified version 2.0.0.</b></p>
+            <div class="Preview">
+                <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-percent="60" data-prepend="<font style='color:White;font-size:35px;margin-left:-15px'>&ndash;</font>" data-size="188" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="2" data-label="Years" data-label_color="#FFF"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-percent="88" data-append="mph" data-size="200" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="15" data-label="Speed" data-style="Arch" data-label_color="#FFF"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-percent="100" data-text="<font style='color:White;font-size:35px;letter-spacing:-1px'>1.21</font>" data-append="<font style='color:white'>GW</font>" data-size="200" data-theme="White" data-back="RGBa(0,0,0,.1)" data-width="15" data-label="Mr Fusion" data-style="Semi" data-label_color="#FFF"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_4" data-percent="100" data-append="Y" data-size="180" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="15" data-label="Flux Capacitor" data-label_color="#FFF" data-stripe="2"></div>
+            </div>
+        </header>
+
+        <h3 id="Features">GaugeMeter.js Features</h3>
+        <ul class="Cols2">
+            <li><p>Just one script, there is no dependencies.</p></li>
+            <li><p>Built-in themes.</p></li>
+            <li><p>HTML5 renders the Canvas content without images.</p></li>
+            <li><p>Add custom text &amp; label.</p></li>
+            <li><p>Support for any page size and page color.</p></li>
+            <li><p>Configure via data attributes, object properties on call or default settings.</p></li>
+            <li><p>Update via jQuery call.</p></li>
+        </ul>
+
+        <h3 id="Requirements">Requirements</h3>
+        <ul>
+            <li><p><a href="https://code.jquery.com/jquery-3.1.1.min.js">jQuery 3.2.1</a></p></li>
+        </ul>
+
+        <h3 id="Download">Download Library</h3>
+        <p>This jQuery GaugeMeter Plugin can be <a href="https://github.com/Mictronics/GaugeMeter">downloaded here</a>.</p>
+
+        <p>Original demo was here: <s><a href="http://ashalom.github.io/GaugeMeter">http://ashalom.github.io/GaugeMeter</a></s></p>
+        <p>Original repo was here: <s><a href="https://github.com/AshAlom/GaugeMeter">https://github.com/AshAlom/GaugeMeter</a></s></p>
+        <p>Original code backup: <a href="https://github.com/githubsrinath/GaugeMeter">https://github.com/githubsrinath/GaugeMeter</a></p>
+
+        <h2 id="Implementation">Implementation</h2>
+
+        <p>Include the following jQuery &amp; JavaScript Code, CSS and HTML code to render a minimal form of the GaugeMeter.</p>
+
+        <h3 id="JavaScript">jQuery &amp; JavaScript Code</h3>
+        <pre class="Code">
+&lt;script src="./GaugeMeter.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  $(document).ready(function(){
+    $(".GaugeMeter").gaugeMeter();
+  });
+&lt;/script"&gt;</pre>
+
+
+        <h3 id="CSS">CSS Styles</h3>
+
+        <pre class="Code">
+&lt;style&gt;
+  .GaugeMeter{
+    Position:        Relative;
+    Text-Align:      Center;
+    Overflow:        Hidden;
+    Cursor:          Default;
+  }
+
+  .GaugeMeter SPAN,
+  .GaugeMeter B{
+    Margin:          0 23%;
+    Width:           5%;
+    Position:        Absolute;
+    Text-align:      Center;
+    Display:         Inline-Block;
+    Color:           RGBa(0,0,0,.8);
+    Font-Weight:     100;
+    Font-Family:     "Open Sans", Arial;
+    Overflow:        Hidden;
+    White-Space:     NoWrap;
+    Text-Overflow:   Ellipsis;
+  }
+  .GaugeMeter[data-style="Semi"] B{
+    Margin:          0 10%;
+    Width:           80%;
+  }
+
+  .GaugeMeter S,
+  .GaugeMeter U{
+    Text-Decoration: None;
+    Font-Size:       .5em;
+    Opacity:         .5;
+  }
+
+  .GaugeMeter B{
+    Color:           Black;
+    Font-Weight:     300;
+    Font-Size:       .5em;
+    Opacity:         .8;
+  }
+&lt;/style&gt;</pre>
+
+
+        <h3 id="HTML">HTML Code</h3>
+        <p>Minimal Implementation. The code below is all you will need to render a basic gauge meter with 0 indication.</p>
+        <pre class="Code">
+&lt;div class="GaugeMeter" id="GaugeMeter_1"&gt;&lt;/div&gt;</pre>
+        <div class="GaugeMeter" id="GaugeMeter_100" style="Float: none;"></div>
+
+        <p>Basic Implementation. The code below is all you will need to render a basic gauge meter with 10 indication.</p>
+        <pre class="Code">
+&lt;div class="GaugeMeter" id="GaugeMeter_1" data-percent="10"&gt;&lt;/div&gt;</pre>
+        <div class="GaugeMeter" id="GaugeMeter_101" data-percent="10" style="Float: none;"></div>
+        
+        <p>Update the gauge value and its indication via jQuery.</p>
+        <pre class="Code">
+$("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
+        <div class="GaugeMeter" id="GaugeMeter_103" style="Float: none;"></div>
+
+        <p>Below is a list of all the optional parameters, see the <a href="#Parameters">Parameter Definitions</a> for more details on how to utilize these data attributes.</p>
+        <pre class="Code">
+&lt;div class="GaugeMeter" id="GaugeMeter_1"<i style="color:red">
+    data-percent="10"
+    data-used="256"
+    data-total="1024"	
+    data-size="200"
+    data-prepend="$"
+    data-append=".00"
+    data-theme="Red-Gold-Green"
+    data-color="Blue"
+    data-back="Silver"
+    data-width="2"	
+    data-style="Semi"
+    data-stripe="2"
+    data-animationstep = 1
+    data-animate_gauge_colors=true
+    data-animate_text_colors=true
+    data-label="VISA Card"
+    data-label_color="#FF0000"
+    data-text="Spendings"
+    data-fill="#FFFFFF"</i>
+&gt;&lt;/div&gt;</pre>
+
+
+        <h2 id="Parameters">Parameter Definitions</h2>
+
+        <p>The form of the gauge meter can be manipulated by means of the following parameters. These parameters can be passed in to the library via HTML5 tag data attributes, as illustrated in the HTML example code above or as object properties when calling the library. The following table elaborates upon each of the parameter properties.</p>
+
+        <table class="StickyHeader">
+            <thead>
+                <tr class="TableHead">
+                    <th class="Col1">Attribute</th>
+                    <th class="Col2">Optional</th>
+                    <th class="Col3">Defaults</th>
+                    <th class="Col4">Values</th>
+                    <th class="Col5">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="Col1">data-percent</th>
+                    <td class="Col2"><u>No</u></td>
+                    <td class="Col3">0</td>
+                    <td class="Col4">Any positive integer, between <i>0</i> to <i>100</i>.</td>
+                    <td class="Col5">The value to set the gauge meter to.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-used</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">null</td>
+                    <td class="Col4">Any positive integer.</td>
+                    <td class="Col5">Display a percentage of a value that overrides any <i>data-percent</i> defined count.<br /><br />To show "25%" of 512 GB of RAM being used, you would specify "128" here and "512" for <i>data-total</i>.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-total</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">null</td>
+                    <td class="Col4">Any positive integer.</td>
+                    <td class="Col5">Display a percentage of a value that overrides any <i>data-percent</i> defined count.<br /><br />To show "25%" of 512 GB of RAM being used, you would specify "512" here and "128" for <i>data-used</i>.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-text</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3"><em>null</em></td>
+                    <td class="Col4">Any short string.</td>
+                    <td class="Col5">Replaces the <i>data-percent</i> count in the center of the gauge.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-prepend</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3"><em>null</em></td>
+                    <td class="Col4">Any string (2 bytes max).</td>
+                    <td class="Col5">Adds this text before the percent count in the center of the gauge.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-append</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3"><em>null</em></td>
+                    <td class="Col4">Any string (2 bytes max).</td>
+                    <td class="Col5">Adds this text after the percent count in the center of the gauge. Typical use would be a "%" symbol.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-size</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">100</td>
+                    <td class="Col4">Any positive integer.</td>
+                    <td class="Col5">Width &amp; height of the gauge meter in pixels.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-width</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">3</td>
+                    <td class="Col4">Any positive integer.</td>
+                    <td class="Col5">Thickness of the gauge meter progress bar in pixels.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-style</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">Full</td>
+                    <td class="Col4"><i>Full</i>, <i>Semi</i> or <i>Arch</i></td>
+                    <td class="Col5">Displays either a full circle, semi-circle or an arched-circle.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-color</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3"><i>#2C94E0</i></td>
+                    <td class="Col4">Hex values (<i>#FFFFFF</i>), Red-Green-Blue-Alpha color space (<i>RGBa(255,255,255,1.0)</i>) or HTML color-name (<i>Red</i>)</td>
+                    <td class="Col5">The foreground-color of the gauge meter's progress bar.<br/><br/>This value is overridden if <i>data-theme</i> is specified.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-back</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">RGBa(0,0,0,.06)</td>
+                    <td class="Col4">Hex values (<i>#FFFFFF</i>), Red-Green-Blue-Alpha color space (<i>RGBa(255,255,255,1.0)</i>) or HTML color-name (<i>Green</i>)</td>
+                    <td class="Col5">The background-color of the gauge meter's progress bar.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-theme</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">Red-Gold-Green</td>
+                    <td class="Col4">
+                        <i>Red-Gold-Green</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #d90000, #ffd900, #32d900);"><span></span></div>
+
+                        <i>Green-Gold-Red</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #32d900, #ffd900, #d90000);"><span></span></div>
+
+                        <i>Green-Red</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #d90000, #32d900);"><span></span></div>
+
+                        <i>Red-Green</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #32d900, #d90000);"><span></span></div>
+
+                        <i>DarkBlue-LightBlue</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #2c94e0, #21b2f7);"><span></span></div>
+
+                        <i>LightBlue-DarkBlue</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #21b2f7, #2c94e0);"><span></span></div>
+
+                        <i>DarkRed-LightRed</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #d90000, #ff0000);"><span></span></div>
+
+                        <i>LightRed-DarkRed</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #ff0000, #d90000);"><span></span></div>
+
+                        <i>DarkGreen-LightGreen</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #32d900, #3afc00);"><span></span></div>
+
+                        <i>LightGreen-DarkGreen</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #3afc00, #32d900);"><span></span></div>
+
+                        <i>DarkGold-LightGold</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #ffb800, #ffd900);"><span></span></div>
+
+                        <i>LightGold-DarkGold</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #ffd900, #ffb800);"><span></span></div>
+
+                        <i>White</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #fafafa, #fff);"><span></span></div>
+
+                        <i>Black</i>
+                        <div style="Background-Image: Linear-Gradient(90deg, #000000, #666);"><span></span></div>
+                    </td>
+                    <td class="Col5">Color &amp; gradient themes to fill the foreground-color of the gauge meter's progress bar with.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-animate_gauge_colors</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">false</td>
+                    <td class="Col4">Boolean, <i>false</i> or <i>true</i>.</td>
+                    <td class="Col5">When enabled, the foreground-color of the gauge meter's progress bar will cycle according to the color value, as directed by the <i>data-theme</i>.<br/><br/>If enabled, this overrides any values specified by the <i>data-color</i>.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-animate_text_colors</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">false</td>
+                    <td class="Col4">Boolean, <i>false</i> or <i>true</i>.</td>
+                    <td class="Col5">When enabled, the percentage text color of the gauge meter will cycle according to the color value, as directed by the <i>data-theme</i>.<br/><br/>If enabled, this overrides any values specified by the <i>data-label_color</i>.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-label</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">null</td>
+                    <td class="Col4">Any short string.</td>
+                    <td class="Col5">Supplemental text label that can appear below the central percentage or text of the gauge meter.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-label_color</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">Black</td>
+                    <td class="Col4">Hex values (<i>#FFFFFF</i>), Red-Green-Blue-Alpha color space (<i>RGBa(255,255,255,1.0)</i>) or HTML color-name (<i>Blue</i>)</td>
+                    <td class="Col5">The foreground text color of the supplemental text label.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-stripe</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">0</td>
+                    <td class="Col4">Any positive integers.</td>
+                    <td class="Col5">Show the gauge meter's progress bar in solid form or stripe form.<br /><br />If the value is greater than <i>0</i>, the gauge meter's progress bar changes from a solid to a stripe, where the value is the thickness of the stripes.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-fill</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">null</td>
+                    <td class="Col4">Hex values (#FFFFFF), Red-Green-Blue-Alpha color space (RGBa(255,255,255,1.0)) or HTML color-name (Blue)</td>
+                    <td class="Col5">Fill color of internal gauge background area where prepend, append and gauge text is shown.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-animationstep</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">1</td>
+                    <td class="Col4">Any positive integers.</td>
+                    <td class="Col5">Step width used for animation when gauge bargraph is drawn. Higher number results in higher animation speed. 0 stops animation.</td>
+                </tr>                
+            </tbody>
+        </table>
+
+        <h2 id="Examples">Examples</h2>
+        <p>A few samples to show off the capabilities of this plugin.</p>
+        <pre>
+data-percent:              "10"
+data-text:                 null
+data-prepend:              null
+data-append:               null
+data-size:                 null
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_1" data-percent="10"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_2" data-percent="20" data-append="%"></div>
+        <hr>
+
+        <pre>
+data-percent:              "30"
+data-text:                 null
+data-prepend:              "$"
+data-append:               null
+data-size:                 null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_3" data-percent="30" data-prepend="$" data-append=""></div>
+        <hr>
+
+        <pre>
+data-percent:              "40"
+data-text:                 "Hello"
+data-prepend:              null
+data-append:               null
+data-size:                 null
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_4" data-percent="40" data-text="Hello" data-info="1234567890ABCDEFG1234567890"></div>
+        <hr>
+
+        <pre>
+data-percent:              "50"
+data-text:                 null
+data-prepend:              "%"
+data-append:               null
+data-size:                 "50"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_5" data-percent="50" data-append="%" data-size="50"></div>
+        <hr>
+
+        <pre>
+data-percent:              "60"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "64"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_6" data-percent="60" data-append="%" data-size="64"></div>
+        <hr>
+
+        <pre>
+data-percent:              "70"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "128"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_7" data-percent="70" data-append="%" data-size="128"></div>
+        <hr>
+
+        <pre>
+data-percent:              "80"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                "20"
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "DarkRed-LightRed"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               "2"
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_8" data-percent="80" data-append="%" data-size="150" data-width="20" data-stripe="4" data-theme="DarkRed-LightRed"></div>
+        <hr>
+
+        <pre>
+data-percent:              "88"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "200"
+data-width:                "1"
+data-style:                null
+data-color:                null
+data-back:                 "RGBa(255,255,255,0)"
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_9" data-percent="88" data-append="%" data-size="200" data-back="RGBa(255,255,255,0)" data-width="1"></div>
+        <hr>
+
+        <pre>
+data-percent:              "77"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "256"
+data-width:                "20"
+data-style:                null
+data-color:                "#2C94E0"
+data-back:                 "#FF9EE0"
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_10" data-percent="77" data-append="%" data-size="256" data-color="#2C94E0" data-back="#FF9EE0" data-width="30"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                "15"
+data-style:                "Semi"
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_11" data-percent="20" data-append="%" data-size="150" data-style="Semi" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_12" data-percent="40" data-append="%" data-size="150" data-style="Semi" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_13" data-percent="60" data-append="%" data-size="150" data-style="Semi" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_14" data-percent="80" data-append="%" data-size="150" data-style="Semi" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_15" data-percent="100" data-append="%" data-size="150" data-style="Semi" data-width="15"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                "15"
+data-style:                "Arch"
+data-color:                null
+data-back:                 null
+data-theme:                "Red-Gold-Green"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_16" data-percent="20" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-style="Arch" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_17" data-percent="40" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-style="Arch" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_18" data-percent="60" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-style="Arch" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_19" data-percent="80" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-style="Arch" data-width="15"></div>
+        <div class="GaugeMeter" id="GaugeMeter_20" data-percent="100" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-style="Arch" data-width="15"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "Green-Gold-Red"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_21" data-percent="20" data-append="%" data-size="150" data-theme="Green-Gold-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_22" data-percent="40" data-append="%" data-size="150" data-theme="Green-Gold-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_23" data-percent="60" data-append="%" data-size="150" data-theme="Green-Gold-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_24" data-percent="80" data-append="%" data-size="150" data-theme="Green-Gold-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_25" data-percent="100" data-append="%" data-size="150" data-theme="Green-Gold-Red"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "Green-Red"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_26" data-percent="20" data-append="%" data-size="150" data-theme="Green-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_27" data-percent="40" data-append="%" data-size="150" data-theme="Green-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_28" data-percent="60" data-append="%" data-size="150" data-theme="Green-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_29" data-percent="80" data-append="%" data-size="150" data-theme="Green-Red"></div>
+        <div class="GaugeMeter" id="GaugeMeter_30" data-percent="100" data-append="%" data-size="150" data-theme="Green-Red"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "Red-Green"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_31" data-percent="20" data-append="%" data-size="150" data-theme="Red-Green"></div>
+        <div class="GaugeMeter" id="GaugeMeter_32" data-percent="40" data-append="%" data-size="150" data-theme="Red-Green"></div>
+        <div class="GaugeMeter" id="GaugeMeter_33" data-percent="60" data-append="%" data-size="150" data-theme="Red-Green"></div>
+        <div class="GaugeMeter" id="GaugeMeter_34" data-percent="80" data-append="%" data-size="150" data-theme="Red-Green"></div>
+        <div class="GaugeMeter" id="GaugeMeter_35" data-percent="100" data-append="%" data-size="150" data-theme="Red-Green"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "DarkBlue-LightBlue"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_36" data-percent="20" data-append="%" data-size="150" data-theme="DarkBlue-LightBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_37" data-percent="40" data-append="%" data-size="150" data-theme="DarkBlue-LightBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_38" data-percent="60" data-append="%" data-size="150" data-theme="DarkBlue-LightBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_39" data-percent="80" data-append="%" data-size="150" data-theme="DarkBlue-LightBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_40" data-percent="100" data-append="%" data-size="150" data-theme="DarkBlue-LightBlue"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "LightBlue-DarkBlue"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_41" data-percent="20" data-append="%" data-size="150" data-theme="LightBlue-DarkBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_42" data-percent="40" data-append="%" data-size="150" data-theme="LightBlue-DarkBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_43" data-percent="60" data-append="%" data-size="150" data-theme="LightBlue-DarkBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_44" data-percent="80" data-append="%" data-size="150" data-theme="LightBlue-DarkBlue"></div>
+        <div class="GaugeMeter" id="GaugeMeter_45" data-percent="100" data-append="%" data-size="150" data-theme="LightBlue-DarkBlue"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "DarkRed-LightRed"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_46" data-percent="20" data-append="%" data-size="150" data-theme="DarkRed-LightRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_47" data-percent="40" data-append="%" data-size="150" data-theme="DarkRed-LightRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_48" data-percent="60" data-append="%" data-size="150" data-theme="DarkRed-LightRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_49" data-percent="80" data-append="%" data-size="150" data-theme="DarkRed-LightRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_50" data-percent="100" data-append="%" data-size="150" data-theme="DarkRed-LightRed"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "LightRed-DarkRed"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_51" data-percent="20" data-append="%" data-size="150" data-theme="LightRed-DarkRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_52" data-percent="40" data-append="%" data-size="150" data-theme="LightRed-DarkRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_53" data-percent="60" data-append="%" data-size="150" data-theme="LightRed-DarkRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_54" data-percent="80" data-append="%" data-size="150" data-theme="LightRed-DarkRed"></div>
+        <div class="GaugeMeter" id="GaugeMeter_55" data-percent="100" data-append="%" data-size="150" data-theme="LightRed-DarkRed"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "DarkGreen-LightGreen"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_56" data-percent="20" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_57" data-percent="40" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_58" data-percent="60" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_59" data-percent="80" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_60" data-percent="100" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "LightGreen-DarkGreen"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_61" data-percent="20" data-append="%" data-size="150" data-theme="DarkGreen-LightGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_62" data-percent="40" data-append="%" data-size="150" data-theme="LightGreen-DarkGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_63" data-percent="60" data-append="%" data-size="150" data-theme="LightGreen-DarkGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_64" data-percent="80" data-append="%" data-size="150" data-theme="LightGreen-DarkGreen"></div>
+        <div class="GaugeMeter" id="GaugeMeter_65" data-percent="100" data-append="%" data-size="150" data-theme="LightGreen-DarkGreen"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "DarkGold-LightGold"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_66" data-percent="20" data-append="%" data-size="150" data-theme="DarkGold-LightGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_67" data-percent="40" data-append="%" data-size="150" data-theme="DarkGold-LightGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_68" data-percent="60" data-append="%" data-size="150" data-theme="DarkGold-LightGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_69" data-percent="80" data-append="%" data-size="150" data-theme="DarkGold-LightGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_70" data-percent="100" data-append="%" data-size="150" data-theme="DarkGold-LightGold"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "LightGold-DarkGold"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_71" data-percent="20" data-append="%" data-size="150" data-theme="LightGold-DarkGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_72" data-percent="40" data-append="%" data-size="150" data-theme="LightGold-DarkGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_73" data-percent="60" data-append="%" data-size="150" data-theme="LightGold-DarkGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_74" data-percent="80" data-append="%" data-size="150" data-theme="LightGold-DarkGold"></div>
+        <div class="GaugeMeter" id="GaugeMeter_75" data-percent="100" data-append="%" data-size="150" data-theme="LightGold-DarkGold"></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "Red-Gold-Green"
+data-animate_gauge_colors: true
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_76" data-percent="20" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=false></div>
+        <div class="GaugeMeter" id="GaugeMeter_77" data-percent="40" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=false></div>
+        <div class="GaugeMeter" id="GaugeMeter_78" data-percent="60" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=false></div>
+        <div class="GaugeMeter" id="GaugeMeter_79" data-percent="80" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=false></div>
+        <div class="GaugeMeter" id="GaugeMeter_80" data-percent="100" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=false></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                "Red-Gold-Green"
+data-animate_gauge_colors: true
+data-animate_text_colors:  true
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_81" data-percent="20" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=true></div>
+        <div class="GaugeMeter" id="GaugeMeter_82" data-percent="40" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=true></div>
+        <div class="GaugeMeter" id="GaugeMeter_83" data-percent="60" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=true></div>
+        <div class="GaugeMeter" id="GaugeMeter_84" data-percent="80" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=true></div>
+        <div class="GaugeMeter" id="GaugeMeter_85" data-percent="100" data-append="%" data-size="150" data-theme="Red-Gold-Green" data-animate_gauge_colors=true data-animate_text_colors=true></div>
+        <hr>
+
+        <pre>
+data-percent:              "20" - "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 null
+data-width:                "2"
+data-style:                null
+data-color:                null
+data-back:                 "RGBa(255,255,255,.2)"
+data-theme:                "White"
+data-animate_gauge_colors: false
+data-animate_text_colors:  true
+data-label:                null
+data-label_color:          "#FFF"
+data-stripe:               null
+        </pre>
+        <div
+            style="
+            Background:		#0070ad URL(./BokehFrost.jpg) Top Left No-Repeat;
+            Background-Size:	Cover;
+            Padding:		15px;
+            Border-Radius:	10px;
+            Position:		Relative;
+            Width:		Auto;
+            Float:		Left;
+            "
+            >
+            <div class="GaugeMeter" id="GaugeMeter_86" data-percent="5" data-append="%" data-theme="White" data-back="RGBa(255,255,255,.2)" data-animate_gauge_colors="0" data-animate_text_colors=true data-width="2"></div>
+            <div class="GaugeMeter" id="GaugeMeter_87" data-percent="40" data-append="%" data-theme="White" data-back="RGBa(255,255,255,.2)" data-animate_gauge_colors="0" data-animate_text_colors=true data-width="2"></div>
+            <div class="GaugeMeter" id="GaugeMeter_88" data-percent="60" data-append="%" data-theme="White" data-back="RGBa(255,255,255,.2)" data-animate_gauge_colors="0" data-animate_text_colors=true data-width="2"></div>
+            <div class="GaugeMeter" id="GaugeMeter_89" data-percent="80" data-append="%" data-theme="White" data-back="RGBa(255,255,255,.2)" data-animate_gauge_colors="0" data-animate_text_colors=true data-width="2"></div>
+            <div class="GaugeMeter" id="GaugeMeter_90" data-percent="100" data-append="%" data-theme="White" data-back="RGBa(255,255,255,.2)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="2" data-label="Signal" data-label_color="#FFF"></div>
+        </div>
+        <hr>
+
+        <pre>
+data-percent:              "47" / "76" / "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "180"
+data-width:                "7"
+data-style:                null / "Arch" / "Semi"
+data-color:                null
+data-back:                 null
+data-theme:                "Black"
+data-animate_gauge_colors: true
+data-animate_text_colors:  true
+data-label:                Battery / WiFi / Upload
+data-label_color:          "#FF0000"
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_91" data-percent="47" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Battery" data-style="Arch" data-label_color="#FF0000"></div>
+        <div class="GaugeMeter" id="GaugeMeter_92" data-percent="76" data-append="dB" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-style="Semi" data-label="WiFi" data-label_color="#FF0000"></div>
+        <div class="GaugeMeter" id="GaugeMeter_93" data-percent="100" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Upload" data-label_color="#FF0000"></div>
+        <hr>
+
+        <pre>
+data-percent:              "47" / "76" / "100"
+data-text:                 null
+data-prepend:              null
+data-append:               "%"
+data-size:                 "180"
+data-width:                "7"
+data-style:                null / "Arch" / "Semi"
+data-color:                null
+data-back:                 null
+data-theme:                "Black"
+data-animate_gauge_colors: true
+data-animate_text_colors:  true
+data-label:                Battery / WiFi / Upload
+data-label_color:          "#FF0000"
+data-stripe:               null
+data-fill:                 "#21B4F9"
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_94" data-percent="47" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Battery" data-style="Arch" data-label_color="#FF0000" data-fill="#21B4F9"></div>
+        <div class="GaugeMeter" id="GaugeMeter_95" data-percent="76" data-append="dB" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-style="Semi" data-label="WiFi" data-label_color="#FF0000" data-fill="#21B4F9"></div>
+        <div class="GaugeMeter" id="GaugeMeter_96" data-percent="100" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Upload" data-label_color="#FF0000" data-fill="#21B4F9"></div>
+        <hr>
+        
+        <footer id="Footer">
+            <a href="https://github.com/Mictronics/GaugeMeter">
+                <h4>GaugeMeter
+                    <b>.js</b>
+                </h4>
+            </a>
+        </footer>
+
+        <a href="https://github.com/Mictronics/GaugeMeter" class="Ribbon" Title="github.com/Mictronics">Fork me on GitHub</a>
+
+        <script>
+            $(document).ready(function () {
+                //GaugeMeter
+                $(".GaugeMeter").gaugeMeter();
+                $("#GaugeMeter_103").gaugeMeter({percent:15});
+
+                //Format Code
+                $("pre.Code").html(function (index, html) {
+                    return html.replace(/^(.*)$/mg, "<span class='Line'>$1</span>");
+                });
+
+                //Sticky Table Header
+                var tables = $("table.StickyHeader");
+                tables.each(function (i) {
+                    var table = tables[i];
+                    var theadClone = $(table).find("thead").clone(true);
+                    var stickyHeader = $("<div></div>").addClass("StickyHeader Hide");
+                    stickyHeader.append($("<table></table")).find("table").append(theadClone);
+                    $(table).after(stickyHeader);
+
+                    var tableHeight = $(table).height();
+                    var tableWidth = $(table).width() + Number($(table).css("padding-left").replace(/px/ig, "")) + Number($(table).css("padding-right").replace(/px/ig, "")) + Number($(table).css("border-left-width").replace(/px/ig, "")) + Number($(table).css("border-right-width").replace(/px/ig, ""));
+
+                    var headerCells = $(table).find("thead th");
+                    var headerCellHeight = $(headerCells[0]).height();
+
+                    var no_fixed_support = false;
+                    if (stickyHeader.css("position") === "Absolute") {
+                        no_fixed_support = true;
+                    }
+
+                    var stickyHeaderCells = stickyHeader.find("th");
+                    stickyHeader.css("width", "100%");
+                    var cellWidth = $(headerCells[0]).width() + 1;
+                    $(stickyHeaderCells[0]).attr("style", "width:" + cellWidth + "px !important");
+
+                    var cutoffTop = $(table).offset().top;
+                    var cutoffBottom = tableHeight + cutoffTop - headerCellHeight;
+
+                    $(window).scroll(function () {
+                        var currentPosition = $(window).scrollTop();
+                        if (currentPosition > cutoffTop && currentPosition < cutoffBottom) {
+                            stickyHeader.removeClass("Hide");
+                            if (no_fixed_support) {
+                                stickyHeader.css("top", currentPosition + "px");
+                            }
+                        } else {
+                            stickyHeader.addClass("Hide");
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
