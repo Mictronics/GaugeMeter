@@ -100,6 +100,8 @@
             }
             /* Draws the gauge. */
             function drawGauge(a) {
+		if(M < 0) M = 0;
+                if(M > 100) M = 100;
                 var lw = option.width < 1 || isNaN(option.width) ? option.size / 20 : option.width;
                 g.clearRect(0, 0, b.width, b.height);
                 g.beginPath();
@@ -177,9 +179,11 @@
                 if(Number.isInteger(option.percent)){
                     c = option.percent;
                 } else {
-                    c = a.percent;
+                    c = defaults.percent;
                 }
             }
+            if(c < 0) c = 0; 
+            if(c > 100) c = 100;
 
             option.fgcolor = getThemeColor(c);
             if(option.color !== "" && option.color !== null && option.color !== undefined){
