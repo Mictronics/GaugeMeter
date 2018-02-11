@@ -173,13 +173,12 @@
             }
 
             if(Number.isInteger(option.used) && Number.isInteger(option.total)){
-                var u = option.total / 100;
-                c = (option.used / u).toFixed(3);
+                c = option.used / (option.total / 100);
             } else {
                 if(Number.isInteger(option.percent)){
                     c = option.percent;
                 } else {
-                    c = defaults.percent;
+                    c = parseInt(defaults.percent);
                 }
             }
             if(c < 0) c = 0; 
