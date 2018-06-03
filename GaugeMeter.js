@@ -10,7 +10,7 @@
  * This is a bug fixed and modified version of the AshAlom Gauge Meter.
  * Copyright 2018 Michael Wolf (Mictronics)
  * https://github.com/mictronics/GaugeMeter
- * 
+ *
  */
 !function ($) {
     $.fn.gaugeMeter = function (t) {
@@ -76,7 +76,7 @@
                 if(child.length !== 0){
                     child.html(r).css({color: fgcolor});
                     return;
-                }  
+                }
                 $("<span></span>").appendTo(t).html(r).css({
                     "line-height": option.size + "px",
                     "font-size": .22 * option.size + "px",
@@ -92,7 +92,7 @@
                     } else {
                         option[element] = $(defaults).attr(element);
                     }
-                    
+
                     if(element === "fill"){
                         s = option[element];
                     }
@@ -123,7 +123,7 @@
                     drawGauge(Math.min(M, c) / 100);
                 }, p));
             }
-            
+
             $(this).attr("data-id", $(this).attr("id"));
             var r,
                 dataAttr = ["percent",
@@ -151,26 +151,6 @@
                 s = false;
             p.addClass("gaugeMeter");
             getDataAttr(p);
-            
-            if( option.text !== "" && option.text !== null && option.text !== undefined){
-                if(option.append !== "" && option.append !== null && option.append !== undefined){
-                    r = option.text + "<u>" + option.append + "</u>";
-                } else {
-                    r = option.text;
-                }
-                if(option.prepend !== "" && option.prepend !== null && option.prepend !== undefined){
-                    r = "<s>" + option.prepend + "</s>" + r;
-                }
-            } else {
-                r = (option.percent).toString();
-                if(option.prepend !== "" && option.prepend !== null && option.prepend !== undefined){
-                    r = "<s>" + option.prepend + "</s>" + r;
-                }
-                
-                if(option.append !== "" && option.append !== null && option.append !== undefined){
-                    r = r + "<u>" + option.append + "</u>";
-                }
-            }
 
             if(Number.isInteger(option.used) && Number.isInteger(option.total)){
                 c = option.used / (option.total / 100);
@@ -181,25 +161,45 @@
                     c = parseInt(defaults.percent);
                 }
             }
-            if(c < 0) c = 0; 
+            if(c < 0) c = 0;
             if(c > 100) c = 100;
+
+            if( option.text !== "" && option.text !== null && option.text !== undefined){
+                if(option.append !== "" && option.append !== null && option.append !== undefined){
+                    r = option.text + "<u>" + option.append + "</u>";
+                } else {
+                    r = option.text;
+                }
+                if(option.prepend !== "" && option.prepend !== null && option.prepend !== undefined){
+                    r = "<s>" + option.prepend + "</s>" + r;
+                }
+            } else {
+                r = c.toString();
+                if(option.prepend !== "" && option.prepend !== null && option.prepend !== undefined){
+                    r = "<s>" + option.prepend + "</s>" + r;
+                }
+
+                if(option.append !== "" && option.append !== null && option.append !== undefined){
+                    r = r + "<u>" + option.append + "</u>";
+                }
+            }
 
             option.fgcolor = getThemeColor(c);
             if(option.color !== "" && option.color !== null && option.color !== undefined){
                 option.fgcolor = option.color;
-            }            
-            
+            }
+
             if(option.animate_gauge_colors === true){
                 option.fgcolor = getThemeColor(c);
             }
             createSpanTag(p);
-            
+
             if(option.style !== "" && option.style !== null && option.style !== undefined){
                 createLabel(p, option.size / 13);
             }
-            
+
             $(this).width(option.size + "px");
-            
+
             var b = $("<canvas></canvas>").attr({width: option.size, height: option.size}).get(0),
                     g = b.getContext("2d"),
                     m = b.width / 2,
