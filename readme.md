@@ -8,7 +8,7 @@ An elegant and dynamic animated graphical gauge meter built with jQuery. GaugeMe
 
 > **DEMO:** ~~http://ashalom.github.io/GaugeMeter~~
 
-> **REPO:** ~~https://github.com/AshAlom/GaugeMeter~~ 
+> **REPO:** ~~https://github.com/AshAlom/GaugeMeter~~
 
 > **BACKUP:** https://github.com/githubsrinath/GaugeMeter
 
@@ -26,7 +26,7 @@ An elegant and dynamic animated graphical gauge meter built with jQuery. GaugeMe
  - Update via jQuery call.
 
 ####  Requirements
- - [jQuery 3.2.1](https://code.jquery.com/jquery-3.2.1.min.js)
+ - [jQuery 3.3.1](https://code.jquery.com/jquery-3.3.1.min.js)
  - HTML5 compatible web browser.
 
 ---
@@ -110,14 +110,14 @@ Below is a list of all the optional parameters, see the Parameter Definitions fo
 <div class="GaugeMeter" id="GaugeMeter_1"
     data-percent="10"
 	data-used="256"
-	data-total="1024"	
+	data-total="1024"
 	data-size="200"
 	data-prepend="$"
 	data-append=".00"
 	data-theme="Red-Gold-Green"
 	data-color="Blue"
 	data-back="Silver"
-	data-width="2"	
+	data-width="2"
 	data-style="Semi"
 	data-stripe="2"
 	data-animationstep = 0
