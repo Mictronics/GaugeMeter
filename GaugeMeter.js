@@ -34,7 +34,8 @@
             label: "",
             label_color: "Black",
             text: "",
-            fill: ""
+            fill: "",
+            showvalue: false
         }, t);
         return this.each(function () {
 
@@ -144,7 +145,8 @@
                     "label",
                     "label_color",
                     "text",
-                    "fill"],
+                    "fill",
+                    "showvalue"],
                 option = {},
                 c = 0,
                 p = $(this),
@@ -174,7 +176,11 @@
                     r = "<s>" + option.prepend + "</s>" + r;
                 }
             } else {
-                r = c.toString();
+                if(defaults.showvalue === true || option.showvalue === true){
+                    r = option.used;
+                } else {
+                    r = c.toString();
+                }
                 if(option.prepend !== "" && option.prepend !== null && option.prepend !== undefined){
                     r = "<s>" + option.prepend + "</s>" + r;
                 }

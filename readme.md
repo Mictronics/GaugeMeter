@@ -125,6 +125,7 @@ Below is a list of all the optional parameters, see the Parameter Definitions fo
 	data-label_color="#FF0000"
 	data-text="Spendings"
 	data-fill="#FFFFFF"
+        data-showvalue=0
 ></div>
 ```
 
@@ -155,4 +156,5 @@ Attribute | Optional | Defaults | Values | Description
 ***```data-stripe```***|Yes|0|Any positive integers.|Show the gauge meter's progress bar in solid form or stripe form. If the value is greater than 0, the gauge meter's progress bar changes from a solid to a stripe, where the value is the thickness of the stripes.
 ***```data-fill```***|Yes|null|Hex values (#FFFFFF), Red-Green-Blue-Alpha color space (RGBa(255,255,255,1.0)) or HTML color-name (Blue)|Fill color of internal gauge background area where prepend, append and gauge text is shown.
 ***```data-animationstep```***|Yes|0|Any positive integer.|Step width used for animation when gauge bargraph is drawn. Higher number results in higher animation speed. 0 stops animation.
+***```data-showvalue```***|Yes|false|Boolean, false or true.|Label will show value instead of percent. Gauge bargraph will show 0-100% or computation of ```data-used``` and ```data-total```.
 See [doc.html](doc.html) for more details.

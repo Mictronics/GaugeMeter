@@ -584,7 +584,8 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
     data-label="VISA Card"
     data-label_color="#FF0000"
     data-text="Spendings"
-    data-fill="#FFFFFF"</i>
+    data-fill="#FFFFFF"
+    data-showvalue=false</i>
 &gt;&lt;/div&gt;</pre>
 
 
@@ -777,6 +778,13 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
                     <td class="Col3">1</td>
                     <td class="Col4">Any positive integers.</td>
                     <td class="Col5">Step width used for animation when gauge bargraph is drawn. Higher number results in higher animation speed. 0 stops animation.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-showvalue</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">false</td>
+                    <td class="Col4">Boolean, false or true.</td>
+                    <td class="Col5">Label will show value instead of percent. Gauge bargraph will show 0-100% or computation of <i>data-used</i> and <i>data-total</i>.</td>
                 </tr>
             </tbody>
         </table>
@@ -1420,6 +1428,30 @@ data-fill:                 "#21B4F9"
         <div class="GaugeMeter" id="GaugeMeter_94" data-percent="47" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Battery" data-style="Arch" data-label_color="#FF0000" data-fill="#21B4F9"></div>
         <div class="GaugeMeter" id="GaugeMeter_95" data-percent="76" data-append="dB" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-style="Semi" data-label="WiFi" data-label_color="#FF0000" data-fill="#21B4F9"></div>
         <div class="GaugeMeter" id="GaugeMeter_96" data-percent="100" data-append="%" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=true data-animate_text_colors=true data-label="Upload" data-label_color="#FF0000" data-fill="#21B4F9"></div>
+        <hr>
+
+        <pre>
+data-percent:              0
+data-total:                256
+data-used:                 128
+data-text:                 null
+data-prepend:              null
+data-append:               null
+data-size:                 "180"
+data-width:                "7"
+data-style:                "Arch"
+data-color:                null
+data-back:                 null
+data-theme:                "Black"
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                "128 of 256"
+data-label_color:          "#FF0000"
+data-stripe:               null
+data-fill:                 null
+data-showvalue:            true
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_94" data-label="128 of 256" data-size="180" data-theme="Black" data-width="7" data-animate_gauge_colors=false data-animate_text_colors=false data-style="Arch" data-label_color="#FF0000" data-showvalue=true data-total=256 data-used=128></div>
         <hr>
 
         <footer id="Footer">
