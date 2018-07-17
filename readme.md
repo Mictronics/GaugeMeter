@@ -55,7 +55,7 @@ Include the following jQuery & JavaScript Code, CSS and HTML code to render a mi
 .GaugeMeter SPAN,
     .GaugeMeter B{
     	Margin:          0 23%;
-    	Width:           5%;
+    	Width:           54%;
     	Position:        Absolute;
     	Text-align:      Center;
     	Display:         Inline-Block;
