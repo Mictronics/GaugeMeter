@@ -88,7 +88,6 @@
             function getDataAttr(t) {
                 $.each(dataAttr, function (index, element) {
                     if(t.data(element) !== undefined && t.data(element) !== null){
-                        var test = t.data(element);
                         option[element] = t.data(element);
                     } else {
                         option[element] = $(defaults).attr(element);
@@ -96,6 +95,14 @@
 
                     if(element === "fill"){
                         s = option[element];
+                    }
+
+                    if((element === "size" ||
+                        element === "width" ||
+                        element === "animationstep" ||
+                        element === "stripe"
+                        ) && !Number.isInteger(option[element])){
+                        option[element] = parseInt(option[element]);
                     }
                 });
             }
