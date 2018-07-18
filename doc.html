@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>GaugeMeter.js - jQuery Plugin</title>
-        <meta name="description" content="Easy to use guage meter JavaScript plugin using jQuery">
+        <meta name="description" content="Easy to use gauge meter JavaScript plugin using jQuery">
         <meta name="author" content="Mictronics">
         <style>
             .GaugeMeter{
@@ -473,11 +473,12 @@
             <li><p>Support for any page size and page color.</p></li>
             <li><p>Configure via data attributes, object properties on call or default settings.</p></li>
             <li><p>Update via jQuery call.</p></li>
+            <li><p>Tested in combination with Knockout.js and Vue.js.</p></li>
         </ul>
 
         <h3 id="Requirements">Requirements</h3>
         <ul>
-            <li><p><a href="https://code.jquery.com/jquery-3.1.1.min.js">jQuery 3.2.1</a></p></li>
+            <li><p><a href="https://code.jquery.com/jquery-3.3.1.min.js">jQuery 3.3.1</a></p></li>
         </ul>
 
         <h3 id="Download">Download Library</h3>
@@ -485,7 +486,6 @@
 
         <p>Original demo was here: <s><a href="http://ashalom.github.io/GaugeMeter">http://ashalom.github.io/GaugeMeter</a></s></p>
         <p>Original repo was here: <s><a href="https://github.com/AshAlom/GaugeMeter">https://github.com/AshAlom/GaugeMeter</a></s></p>
-        <p>Original code backup: <a href="https://github.com/githubsrinath/GaugeMeter">https://github.com/githubsrinath/GaugeMeter</a></p>
 
         <h2 id="Implementation">Implementation</h2>
 
@@ -515,7 +515,7 @@
   .GaugeMeter SPAN,
   .GaugeMeter B{
     Margin:          0 23%;
-    Width:           5%;
+    Width:           54%;
     Position:        Absolute;
     Text-align:      Center;
     Display:         Inline-Block;
@@ -584,6 +584,7 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
     data-label="VISA Card"
     data-label_color="#FF0000"
     data-text="Spendings"
+    data-text_size="0.22"
     data-fill="#FFFFFF"
     data-showvalue=false</i>
 &gt;&lt;/div&gt;</pre>
@@ -631,6 +632,13 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
                     <td class="Col3"><em>null</em></td>
                     <td class="Col4">Any short string.</td>
                     <td class="Col5">Replaces the <i>data-percent</i> count in the center of the gauge.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-text_size</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">0.22</td>
+                    <td class="Col4">Any positive float, between <i>0.0</i> to <i>0.5</i>.</td>
+                    <td class="Col5">Scale factor for text size (indicated value or text in gauge center) in relation to gauge size.</td>
                 </tr>
                 <tr>
                     <th class="Col1">data-prepend</th>
@@ -794,6 +802,7 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
         <pre>
 data-percent:              "10"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               null
 data-size:                 null
@@ -814,6 +823,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 null
@@ -833,6 +843,7 @@ data-stripe:               null
         <pre>
 data-percent:              "30"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              "$"
 data-append:               null
 data-size:                 null
@@ -852,6 +863,7 @@ data-stripe:               null
         <pre>
 data-percent:              "40"
 data-text:                 "Hello"
+data-text_size:            0.22
 data-prepend:              null
 data-append:               null
 data-size:                 null
@@ -870,8 +882,30 @@ data-stripe:               null
         <hr>
 
         <pre>
+data-percent:              "65"
+data-text:                 "World"
+data-text_size:            0.10
+data-prepend:              null
+data-append:               null
+data-size:                 null
+data-width:                null
+data-style:                null
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_4" data-percent="65" data-text="World" data-text_size="0.1" data-info="1234567890ABCDEFG1234567890"></div>
+        <hr>
+
+        <pre>
 data-percent:              "50"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              "%"
 data-append:               null
 data-size:                 "50"
@@ -892,6 +926,7 @@ data-stripe:               null
         <pre>
 data-percent:              "60"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "64"
@@ -912,6 +947,7 @@ data-stripe:               null
         <pre>
 data-percent:              "70"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "128"
@@ -932,6 +968,7 @@ data-stripe:               null
         <pre>
 data-percent:              "80"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -952,6 +989,7 @@ data-stripe:               "2"
         <pre>
 data-percent:              "88"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "200"
@@ -972,6 +1010,7 @@ data-stripe:               null
         <pre>
 data-percent:              "77"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "256"
@@ -992,6 +1031,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1016,6 +1056,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1040,6 +1081,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1064,6 +1106,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1088,6 +1131,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1112,6 +1156,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1136,6 +1181,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1160,6 +1206,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1184,6 +1231,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1208,6 +1256,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1232,6 +1281,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1256,6 +1306,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1280,6 +1331,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1304,6 +1356,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1328,6 +1381,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "150"
@@ -1352,6 +1406,7 @@ data-stripe:               null
         <pre>
 data-percent:              "20" - "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 null
@@ -1388,6 +1443,7 @@ data-stripe:               null
         <pre>
 data-percent:              "47" / "76" / "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "180"
@@ -1410,6 +1466,7 @@ data-stripe:               null
         <pre>
 data-percent:              "47" / "76" / "100"
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               "%"
 data-size:                 "180"
@@ -1435,6 +1492,7 @@ data-percent:              0
 data-total:                256
 data-used:                 128
 data-text:                 null
+data-text_size:            0.22
 data-prepend:              null
 data-append:               null
 data-size:                 "180"

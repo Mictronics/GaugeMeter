@@ -34,6 +34,7 @@
             label: "",
             label_color: "Black",
             text: "",
+            text_size: 0.22,
             fill: "",
             showvalue: false
         }, t);
@@ -78,9 +79,15 @@
                     child.html(r).css({color: fgcolor});
                     return;
                 }
+                if(option.text_size <= 0.0 || Number.isNaN(option.text_size)){
+                    option.text_size = 0.22;
+                }
+                if(option.text_size > 0.5){
+                    option.text_size = 0.5;
+                }
                 $("<span></span>").appendTo(t).html(r).css({
                     "line-height": option.size + "px",
-                    "font-size": .22 * option.size + "px",
+                    "font-size": option.text_size * option.size + "px",
                     color: fgcolor
                 });
             }
@@ -103,6 +110,10 @@
                         element === "stripe"
                         ) && !Number.isInteger(option[element])){
                         option[element] = parseInt(option[element]);
+                    }
+
+                    if(element === "text_size"){
+                        option[element] = parseFloat(option[element]);
                     }
                 });
             }
@@ -152,6 +163,7 @@
                     "label",
                     "label_color",
                     "text",
+                    "text_size",
                     "fill",
                     "showvalue"],
                 option = {},
