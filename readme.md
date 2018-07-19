@@ -124,6 +124,7 @@ Below is a list of all the optional parameters, see the Parameter Definitions fo
 	data-label="VISA Card"
 	data-label_color="#FF0000"
 	data-text="Spendings"
+        data-text_size="0.22"
 	data-fill="#FFFFFF"
         data-showvalue=0
 ></div>
@@ -141,6 +142,7 @@ Attribute | Optional | Defaults | Values | Description
 ***```data-used```***|Yes|null|Any positive integer.|Display a percentage of a value that overrides any ```data-percent``` defined count. To show "25%" of 512 GB of RAM being used, you would specify "128" here and "512" for ```data-total```.
 ***```data-total```***|Yes|null|Any positive integer.|Display a percentage of a value that overrides any ```data-percent``` defined count. To show "25%" of 512 GB of RAM being used, you would specify "512" here and "128" for ```data-used```.
 ***```data-text```***|Yes|null|Any short string.|Replaces the ```data-percent``` count in the center of the gauge.
+***```data-text_size```***|Yes|0.22|Any positive float between 0.0 and 0.5.|Scale factor for text size (indicated value or text in gauge center) in relation to gauge size.
 ***```data-prepend```***|Yes|null|Any string (2 bytes max).|Adds this text before the percent count in the center of the gauge.
 ***```data-append```***|Yes|null|Any string (2 bytes max).|Adds this text after the percent count in the center of the gauge. Typical use would be a "%" symbol.
 ***```data-size```***|Yes|100|Any positive integer.|Width & height of the gauge meter in pixels.
