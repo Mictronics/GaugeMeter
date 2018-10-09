@@ -40,7 +40,7 @@ Include the following jQuery & JavaScript Code, CSS and HTML code to render a mi
 	$(document).ready(function(){
 		$(".GaugeMeter").gaugeMeter();
 	});
-</script">
+</script>
 ```
 
 **CSS Styles**
