@@ -18,6 +18,7 @@
             id: "",
             percent: 0,
             used: null,
+            min: null,
             total: null,
             size: 100,
             prepend: "",
@@ -147,6 +148,7 @@
             var r,
                 dataAttr = ["percent",
                     "used",
+                    "min",
                     "total",
                     "size",
                     "prepend",
@@ -174,7 +176,15 @@
             getDataAttr(p);
 
             if(Number.isInteger(option.used) && Number.isInteger(option.total)){
-                c = option.used / (option.total / 100);
+                var u = option.used;
+                var t = option.total;
+                if(Number.isInteger(option.min)) {
+                    if(option.min < 0) {
+                        t -= option.min;
+                        u -= option.min;
+                    }
+                }
+                c = u / (t / 100);
             } else {
                 if(Number.isInteger(option.percent)){
                     c = option.percent;
