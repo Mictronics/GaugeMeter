@@ -106,8 +106,9 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});
 Below is a list of all the optional parameters, see the Parameter Definitions for more details on how to utilize these data attributes.
 ```html
 <div class="GaugeMeter" id="GaugeMeter_1"
-    data-percent="10"
-	data-used="256"
+        data-percent="10"
+	data-min="-100"
+        data-used="256"
 	data-total="1024"
 	data-size="200"
 	data-prepend="$"
@@ -139,6 +140,7 @@ The form of the gauge meter can be manipulated by means of the following paramet
 Attribute | Optional | Defaults | Values | Description
 ---|:---:|:---:|---|---
 ***```data-percent```***|No|0|Any positive integer, between 0 to 100.|The value to set the gauge meter to.
+***```data-min```***|Yes|null|Any integer.|The minimum value of the gauge meter. Negative values show in combination with ```data-showvalue=true```.
 ***```data-used```***|Yes|null|Any positive integer.|Display a percentage of a value that overrides any ```data-percent``` defined count. To show "25%" of 512 GB of RAM being used, you would specify "128" here and "512" for ```data-total```.
 ***```data-total```***|Yes|null|Any positive integer.|Display a percentage of a value that overrides any ```data-percent``` defined count. To show "25%" of 512 GB of RAM being used, you would specify "512" here and "128" for ```data-used```.
 ***```data-text```***|Yes|null|Any short string.|Replaces the ```data-percent``` count in the center of the gauge.

@@ -457,7 +457,7 @@
             <p class="SubTitle">GaugeMeter.js is highly customizable and includes full-radial, semi-radial &amp; arch dials</p>
             <p><b>This is a bug fixed and modified version of the original Ash Alom gauge meter based on minified version 2.0.0.</b></p>
             <div class="Preview">
-                <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-percent="60" data-prepend="<font style='color:White;font-size:35px;margin-left:-15px'>&ndash;</font>" data-size="188" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="2" data-label="Years" data-label_color="#FFF"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-min=-100 data-total=0 data-used=-10 data-showvalue="true" data-size="188" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="2" data-label="Years" data-label_color="#FFF"></div>
                 <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-percent="88" data-append="mph" data-size="200" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="15" data-label="Speed" data-style="Arch" data-label_color="#FFF"></div>
                 <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-percent="100" data-text="<font style='color:White;font-size:35px;letter-spacing:-1px'>1.21</font>" data-append="<font style='color:white'>GW</font>" data-size="200" data-theme="White" data-back="RGBa(0,0,0,.1)" data-width="15" data-label="Mr Fusion" data-style="Semi" data-label_color="#FFF"></div>
                 <div class="GaugeMeter" id="PreviewGaugeMeter_4" data-percent="100" data-append="Y" data-size="180" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors=true data-animate_text_colors=true data-width="15" data-label="Flux Capacitor" data-label_color="#FFF" data-stripe="2"></div>
@@ -567,6 +567,7 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
         <pre class="Code">
 &lt;div class="GaugeMeter" id="GaugeMeter_1"<i style="color:red">
     data-percent="10"
+    data-min="0"
     data-used="256"
     data-total="1024"
     data-size="200"
@@ -611,6 +612,13 @@ $("#GaugeMeter_1").gaugeMeter({percent:15});</pre>
                     <td class="Col3">0</td>
                     <td class="Col4">Any positive integer, between <i>0</i> to <i>100</i>.</td>
                     <td class="Col5">The value to set the gauge meter to.</td>
+                </tr>
+                <tr>
+                    <th class="Col1">data-min</th>
+                    <td class="Col2">Yes</td>
+                    <td class="Col3">null</td>
+                    <td class="Col4">Any integer.</td>
+                    <td class="Col5">The minimum value of the gauge meter.</td>
                 </tr>
                 <tr>
                     <th class="Col1">data-used</th>
@@ -1026,6 +1034,35 @@ data-label_color:          null
 data-stripe:               null
         </pre>
         <div class="GaugeMeter" id="GaugeMeter_10" data-percent="77" data-append="%" data-size="256" data-color="#2C94E0" data-back="#FF9EE0" data-width="30"></div>
+        <hr>
+
+        <pre>
+data-percent:              0
+data-min:                  -100
+data-total:                100
+data-used:                 -50
+data-text:                 null
+data-text_size:            0.22
+data-prepend:              null
+data-append:               "%"
+data-size:                 "150"
+data-width:                "15"
+data-style:                "Arch"
+data-color:                null
+data-back:                 null
+data-theme:                null
+data-animate_gauge_colors: false
+data-animate_text_colors:  false
+data-label:                null
+data-label_color:          null
+data-stripe:               null
+data-showvalue:            true
+        </pre>
+        <div class="GaugeMeter" id="GaugeMeter_104" data-label="-100 to 100" data-size="150" data-style="Arch" data-width="15" data-showvalue="true" data-min=-100 data-total=100 data-used=-95></div>
+        <div class="GaugeMeter" id="GaugeMeter_105" data-label="-10 to 50" data-size="150" data-style="Semi" data-width="15" data-showvalue="true" data-min=-10 data-total=50 data-used=-5></div>
+        <div class="GaugeMeter" id="GaugeMeter_106" data-label="-100 to 100" data-size="150" data-width="15" data-showvalue="true" data-min=-100 data-total=100 data-used=0></div>
+        <div class="GaugeMeter" id="GaugeMeter_107" data-label="-10 to 50" data-size="150" data-style="Semi" data-width="15" data-showvalue="true" data-min=-10 data-total=50 data-used=30></div>
+        <div class="GaugeMeter" id="GaugeMeter_108" data-label="-100 to 100" data-size="150" data-style="Arch" data-width="15" data-showvalue="true" data-min=-100 data-total=100 data-used=75></div>
         <hr>
 
         <pre>
