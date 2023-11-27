@@ -418,15 +418,13 @@
         g = b.getContext('2d'),
         m = b.width / 2,
         v = b.height / 2,
-        _ = 360 * option.percent,
-        x = (_ * (Math.PI / 180), b.width / 2.5),
+        x = (360 * option.percent * (Math.PI / 180), b.width / 2.5),
         k = 2.3 * Math.PI,
         G = 0,
         M = 0 === option.animationstep ? c : 0,
         z = Math.max(option.animationstep, 0),
         P = 2 * Math.PI,
-        I = Math.PI / 2,
-        R = option.style;
+        I = Math.PI / 2;
       var child = $(this).children('canvas');
       if (child.length !== 0) {
         /* Replace existing canvas when new percentage was written. */
@@ -436,15 +434,14 @@
         $(b).appendTo($(this));
       }
 
-      if ('Semi' === R) {
+      if ('Semi' === option.style) {
         k = 2 * Math.PI;
         G = 3.13;
         P = 1 * Math.PI;
         I = Math.PI / 0.996;
-      }
-      if ('Arch' === R) {
+      } else if ('Arch' === option.style) {
         k = 2.195 * Math.PI;
-        (G = 1), (G = 655.99999);
+        G = 655.99999;
         P = 1.4 * Math.PI;
         I = Math.PI / 0.8335;
       }
