@@ -43,6 +43,13 @@
     );
     return this.each(function () {
       function getThemeColor(e) {
+        if (
+          option.color !== '' &&
+          option.color !== null &&
+          option.color !== undefined
+        ) {
+          return option.color;
+        }
         var t = '#2C94E0';
         return (
           e || (e = 1e-14),
@@ -251,6 +258,10 @@
       }
       /* Draws the gauge. */
       function drawGauge(a) {
+        if (option.animate_gauge_colors) {
+          // Set gauge color for each value change.
+          option.fgcolor = getThemeColor(a * 100);
+        }
         if (M < 0) M = 0;
         if (M > 100) M = 100;
         var lw =
@@ -279,7 +290,10 @@
           ((M += z),
           requestAnimationFrame(function () {
             drawGauge(Math.min(M, c) / 100);
-            console.log(M, c);
+            if (option.animate_text_colors) {
+              // Set text color for each value change.
+              $(p).find('span').css({ color: option.fgcolor });
+            }
             if (defaults.showvalue === true || option.showvalue === true) {
               $(p).find('output').text(option.used);
             } else {
@@ -386,17 +400,6 @@
       }
 
       option.fgcolor = getThemeColor(c);
-      if (
-        option.color !== '' &&
-        option.color !== null &&
-        option.color !== undefined
-      ) {
-        option.fgcolor = option.color;
-      }
-
-      if (option.animate_gauge_colors === true) {
-        option.fgcolor = getThemeColor(c);
-      }
       createSpanTag(p);
 
       if (
