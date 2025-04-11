@@ -339,10 +339,8 @@
         var u = option.used;
         var t = option.total;
         if (Number.isInteger(option.min)) {
-          if (option.min < 0) {
-            t -= option.min;
-            u -= option.min;
-          }
+          t -= option.min;
+          u -= option.min;
         }
         c = u / (t / 100);
       } else {
